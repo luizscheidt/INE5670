@@ -26,6 +26,14 @@ export function ParkThumb(props: ParkProps) {
 
 const styles = StyleSheet.create({
   parkContainer: {
-    marginBottom: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    width: 300,
+    padding: 50,
+    backgroundColor: "#0B132B",
+    borderWidth: 5,
+    borderColor: "#6FFFE9",
   },
 });

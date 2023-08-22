@@ -7,6 +7,7 @@ const PARKS = [
   {
     name: "Beto Carrero",
     address: "Penha, SC",
+    pic: "",
     working_hours: "",
     lat: "",
     lng: "",
@@ -14,6 +15,7 @@ const PARKS = [
   {
     name: "Disney",
     address: "Orlando, Florida",
+    pic: "",
     working_hours: "",
     lat: "",
     lng: "",
@@ -21,6 +23,7 @@ const PARKS = [
   {
     name: "Hopi Hari",
     address: "Vinhedo, SP",
+    pic: "",
     working_hours: "",
     lat: "",
     lng: "",
@@ -28,6 +31,7 @@ const PARKS = [
   {
     name: "Agua Show",
     address: "Florianópolis, SC",
+    pic: "",
     working_hours: "",
     lat: "",
     lng: "",
@@ -37,8 +41,17 @@ const PARKS = [
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      {PARKS.map(function (park) {
-        return <ParkThumb park={park}></ParkThumb>;
+      {PARKS.map((park) => {
+        return (
+          <View>
+            <ParkThumb park={park}></ParkThumb>
+            <View
+              style={styles.separator}
+              lightColor="#eee"
+              darkColor="rgba(255,255,255,0.1)"
+            />
+          </View>
+        );
       })}
     </View>
   );
@@ -46,7 +59,7 @@ export default function TabOneScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -55,7 +68,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   separator: {
-    marginVertical: 30,
+    color: "#6f1d1b",
+    marginVertical: 10,
     height: 1,
     width: "80%",
   },
