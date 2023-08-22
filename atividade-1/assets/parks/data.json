@@ -1,0 +1,27 @@
+{
+  "parks": [
+    {
+      "name": "Beto Carrero",
+      "address": "Penha, Santa Catarina",
+      "open": "10:00",
+      "close": "19:00",
+      "lat": "-26.799",
+      "lng": "-48.614",
+      "thumb": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/39/35/d7/caption.jpg?w=1200&h=-1&s=1",
+      "imgs": [
+        "https://catracalivre.com.br/wp-content/uploads/2021/12/beto-carrero-world.jpg",
+        "https://www.viagensecaminhos.com/wp-content/uploads/2011/02/montanha-russa-beto-carrero-world.jpg",
+        "https://vipzinho.com.br/wp-content/uploads/2018/10/Beto-Carrero.jpg"
+      ],
+      "video": "https://youtu.be/f_73sawzBOc",
+      "social": [
+        "https://www.betocarrero.com.br/",
+        "https://www.instagram.com/betocarrero/?hl=pt-br"
+      ],
+      "price": 120,
+      "buy": "https://www.betocarrero.com.br/passaportes",
+      "phone": "+55 47 3261-2222",
+      "email": ""
+    }
+  ]
+}
