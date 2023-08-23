@@ -2,7 +2,7 @@
   "parks": [
     {
       "name": "Beto Carrero",
-      "address": "Penha, Santa Catarina",
+      "address": "Penha, SC",
       "open": "10:00",
       "close": "19:00",
       "lat": "-26.799",
@@ -21,53 +21,54 @@
       "price": 120,
       "buy": "https://www.betocarrero.com.br/passaportes",
       "phone": "+55 47 3261-2222",
-      "email": ""
+      "email": "suporteonline@betocarrero.com.br"
+    },
+
+    {
+      "name": "Água Show",
+      "address": "Florianópolis, SC",
+      "open": "10:00",
+      "close": "17:00",
+      "lat": "-27.444",
+      "lng": "-48.419",
+      "thumb": "https://i0.wp.com/viajandoem321.com/wp-content/uploads/2016/01/9-blog-viajando-em-3-2-1-agua-show-park-florian%C3%B3polis-ingleses-santa-catarina-melhor-parque-aqu%C3%A1tico.jpg",
+      "imgs": [
+        "https://acquamaniafoz.com.br/wp-content/uploads/2022/10/2.jpg",
+        "https://media.tacdn.com/media/attractions-splice-spp-674x446/06/67/ba/d6.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/0a/28/5d/agua-show-park.jpg?w=1200&h=-1&s=1"
+      ],
+      "video": "https://www.youtube.com/watch?v=lFG-ihSXuVo ",
+      "social": [
+        "https://www.aguashowpark.com.br/",
+        "https://www.instagram.com/aguashowpark/"
+      ],
+      "price": 70,
+      "buy": "https://www.aguashowpark.com.br/loja/",
+      "phone": "+55 48 3369-2354",
+      "email": "aguashowpark@aguashowpark.com.br"
     },
     {
-      "name": "Beto Carrero",
-      "address": "Penha, Santa Catarina",
-      "open": "10:00",
-      "close": "19:00",
-      "lat": "-26.799",
-      "lng": "-48.614",
-      "thumb": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/39/35/d7/caption.jpg?w=1200&h=-1&s=1",
+      "name": "Hopi Hari",
+      "address": "Vinhedo, SP",
+      "open": "11:00",
+      "close": "20:30",
+      "lat": "-22.848",
+      "lng": "-47.017",
+      "thumb": "https://s2-g1.glbimg.com/PDV5PZWXyADWavE1z5Jx8-T3sx8=/0x0:3914x2498/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/W/T/7zEl09RBaWcBvx9IHRxA/hopi-hari-reabre-com-protocolos-de-saude-contra-coronavirus-2-.jpg",
       "imgs": [
-        "https://catracalivre.com.br/wp-content/uploads/2021/12/beto-carrero-world.jpg",
-        "https://www.viagensecaminhos.com/wp-content/uploads/2011/02/montanha-russa-beto-carrero-world.jpg",
-        "https://vipzinho.com.br/wp-content/uploads/2018/10/Beto-Carrero.jpg"
+        "https://static.wixstatic.com/media/a6c44f_a38bda14d07541aaa5b3cf4a61172d4a~mv2.png/v1/fill/w_900,h_499,al_c,q_90/a6c44f_a38bda14d07541aaa5b3cf4a61172d4a~mv2.png",
+        "https://i0.statig.com.br/hopihari/img/DJI_0066-3.jpg",
+        "https://blog.hopihari.com.br/wp-content/uploads/2021/09/ANDY1610_Easy-Resize.com_-e1631628038563.jpg"
       ],
-      "video": "https://youtu.be/f_73sawzBOc",
+      "video": "https://www.youtube.com/watch?v=eAJudPGXvac",
       "social": [
-        "https://www.betocarrero.com.br/",
-        "https://www.instagram.com/betocarrero/?hl=pt-br"
+        "https://www.hopihari.com.br/temporadaInstitucional?gad=1&gclid=Cj0KCQjw3JanBhCPARIsAJpXTx4TxoNbl4uRVuS5t_yfaquTTxajClDA_URuWXlfVChq_wfBmmb1LhIaAhBXEALw_wcB",
+        "https://www.instagram.com/hopihari/"
       ],
-      "price": 120,
-      "buy": "https://www.betocarrero.com.br/passaportes",
-      "phone": "+55 47 3261-2222",
-      "email": ""
-    },
-    {
-      "name": "Beto Carrero",
-      "address": "Penha, Santa Catarina",
-      "open": "10:00",
-      "close": "19:00",
-      "lat": "-26.799",
-      "lng": "-48.614",
-      "thumb": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/39/35/d7/caption.jpg?w=1200&h=-1&s=1",
-      "imgs": [
-        "https://catracalivre.com.br/wp-content/uploads/2021/12/beto-carrero-world.jpg",
-        "https://www.viagensecaminhos.com/wp-content/uploads/2011/02/montanha-russa-beto-carrero-world.jpg",
-        "https://vipzinho.com.br/wp-content/uploads/2018/10/Beto-Carrero.jpg"
-      ],
-      "video": "https://youtu.be/f_73sawzBOc",
-      "social": [
-        "https://www.betocarrero.com.br/",
-        "https://www.instagram.com/betocarrero/?hl=pt-br"
-      ],
-      "price": 120,
-      "buy": "https://www.betocarrero.com.br/passaportes",
-      "phone": "+55 47 3261-2222",
-      "email": ""
+      "price": 129.9,
+      "buy": "https://www.hopihari.com.br/temporadaInstitucional?gad=1&gclid=Cj0KCQjw3JanBhCPARIsAJpXTx4HigHYogKVNmcQvjEGzpQpLNwtQQWpTn-2Xt3EjDa5K9Hz1H7pffYaAnlIEALw_wcB",
+      "phone": "+55 (11) 4210-4000",
+      "email": "fale@hopiharicorp.com.br"
     }
   ]
 }
