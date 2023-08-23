@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 
 import { Text, View } from "./Themed";
 
@@ -27,8 +27,16 @@ export function ParkThumb(props: ParkProps) {
 
   return (
     <View style={styles.parkContainer}>
-      <Text>Nome: {park.name}</Text>
-      <Text>Endereço: {park.address}</Text>
+      <View style={styles.infos}>
+        <Text style={styles.title}>{park.name}</Text>
+        <Text style={styles.texto}>{park.address}</Text>
+      </View>
+      <View>
+        <Image
+          style={styles.picture}
+          source={{ uri: park.thumb, method: "GET" }}
+        />
+      </View>
     </View>
   );
 }
@@ -40,9 +48,33 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     width: 300,
-    padding: 50,
     backgroundColor: "#0B132B",
     borderWidth: 5,
     borderColor: "#6FFFE9",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+    marginTop: 30,
+  },
+  picture: {
+    height: 150,
+    width: 290,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+  },
+  infos: {
+    backgroundColor: "#0B132B",
+    marginVertical: 15,
+    borderStyle: "solid",
+    borderColor: "#6FFFE9",
+    textAlign: "left",
+    marginLeft: 20,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  texto: {
+    fontSize: 16,
   },
 });

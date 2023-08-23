@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 
 import { ParkThumb } from "../../components/ParkThumb";
 import { Text, View } from "../../components/Themed";
@@ -6,11 +6,11 @@ import { parks } from "../../assets/parks/data.json";
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {parks.map(function (park, i) {
         return <ParkThumb key={i} park={park}></ParkThumb>;
       })}
-    </View>
+    </ScrollView>
   );
 }
 
