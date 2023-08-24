@@ -69,6 +69,52 @@
       "buy": "https://www.hopihari.com.br/temporadaInstitucional?gad=1&gclid=Cj0KCQjw3JanBhCPARIsAJpXTx4HigHYogKVNmcQvjEGzpQpLNwtQQWpTn-2Xt3EjDa5K9Hz1H7pffYaAnlIEALw_wcB",
       "phone": "+55 (11) 4210-4000",
       "email": "fale@hopiharicorp.com.br"
+    },
+    {
+      "name": "Mirabilândia",
+      "address": "Olinda, PE",
+      "open": "14:00",
+      "close": "20:00",
+      "lat": "-8.0327",
+      "lng": "-34.873",
+      "thumb": "https://www.maripelomundo.com.br/wp-content/uploads/2019/06/Mirabilandia2.jpg",
+      "imgs": [
+        "https://universodosparques.com.br/wp-content/uploads/2022/09/mirabilandia-wave-swinger.jpg",
+        "https://thiagolagos.com.br/wp-content/uploads/2015/01/IMG_1452.jpg",
+        "https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2023/03/15/mirabilandia_recife-22552156.jpg"
+      ],
+      "video": "https://www.youtube.com/watch?v=LsdklcaThb0",
+      "social": [
+        "https://mirabilandia.com.br/",
+        "https://www.instagram.com/mirabilandiape/"
+      ],
+      "price": 110,
+      "buy": "https://loja.mirabilandia.com.br/",
+      "phone": "+55 (81) 3366-2000",
+      "email": "sac@mirabilandia.com.br"
+    },
+    {
+      "name": "Parque da Mônica",
+      "address": "Jurubatuba, SP",
+      "open": "10:30",
+      "close": "18:00",
+      "lat": "-23.678",
+      "lng": "--46.698",
+      "thumb": "https://m.parquedamonica.com.br/mobile/imagens/sobre-o-parque-destaque.jpg",
+      "imgs": [
+        "https://yata-apix-24dc2f72-4c2c-4528-b836-b7a1df47cbe1.s3-object.locaweb.com.br/9198dc42418a4a2aaca49ac1607298e1.jpg",
+        "https://g1.globo.com/Noticias/SaoPaulo/foto/0,,21260083-EX,00.jpg",
+        "https://vejasp.abril.com.br/wp-content/uploads/2016/11/img_3440-jpg.jpeg"
+      ],
+      "video": "https://www.youtube.com/watch?v=Gp6lH9nfwrU",
+      "social": [
+        "https://ecommerce.parquedamonica.com.br/",
+        "https://www.instagram.com/parquedamonica/"
+      ],
+      "price": 119,
+      "buy": "https://ecommerce.parquedamonica.com.br/",
+      "phone": "+55 11 5693-2200",
+      "email": "sav@parquedamonica.com.br"
     }
   ]
 }
