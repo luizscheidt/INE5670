@@ -21,7 +21,8 @@
       "price": 120,
       "buy": "https://www.betocarrero.com.br/passaportes",
       "phone": "+55 47 3261-2222",
-      "email": ""
+      "email": "",
+      "favorite": true
     },
     {
       "name": "Beto Carrero",
@@ -44,7 +45,8 @@
       "price": 120,
       "buy": "https://www.betocarrero.com.br/passaportes",
       "phone": "+55 47 3261-2222",
-      "email": ""
+      "email": "",
+      "favorite": false
     },
     {
       "name": "Beto Carrero",
@@ -67,7 +69,8 @@
       "price": 120,
       "buy": "https://www.betocarrero.com.br/passaportes",
       "phone": "+55 47 3261-2222",
-      "email": ""
+      "email": "",
+      "favorite": false
     }
   ]
 }

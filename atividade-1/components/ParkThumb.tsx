@@ -1,42 +1,41 @@
 import React from "react";
 import { StyleSheet, Image } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { Text, View } from "./Themed";
+import { useState } from "react";
+import { Park } from "../assets/parks/Park";
 
-type ParkProps = {
-  park: {
-    name: string;
-    address: string;
-    open: string; // Opening hour
-    close: string; // Closing hour
-    lat: string;
-    lng: string;
-    thumb: string; // Thumbnail image url
-    imgs: string[]; // Array of image urls for park detail screen
-    video: string; // Promotional video url
-    social: string[]; // Array of website and social media urls
-    price: Number; // Ticket price
-    buy: string; // Url to buy ticket
-    phone: string;
-    email: string;
-  };
+type ParkThumbProps = {
+  park: Park;
+  reloadOnFavorite?: boolean;
 };
 
-export function ParkThumb(props: ParkProps) {
+export function ParkThumb(props: ParkThumbProps) {
   const park = props.park;
+  const reloadOnFavorite = !!props.reloadOnFavorite;
+  const [favorite, setFavorite] = useState(!!park.favorite);
 
   return (
-    <View style={styles.parkContainer}>
+    <View style={[styles.parkContainer, styles.shadowProp]}>
       <View style={styles.infos}>
         <Text style={styles.title}>{park.name}</Text>
-        <Text style={styles.texto}>{park.address}</Text>
+        <FontAwesome
+          onPress={() => {
+            setFavorite(!favorite);
+            park.favorite = true;
+          }}
+          style={styles.star}
+          name={favorite ? "star" : "star-o"}
+          size={28}
+          color="#e1b704"
+        ></FontAwesome>
+        <Text style={styles.address}>{park.address}</Text>
       </View>
-      <View>
-        <Image
-          style={styles.picture}
-          source={{ uri: park.thumb, method: "GET" }}
-        />
-      </View>
+      <Image
+        style={styles.picture}
+        source={{ uri: park.thumb, method: "GET" }}
+      />
     </View>
   );
 }
@@ -48,9 +47,9 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     width: 300,
-    backgroundColor: "#0B132B",
-    borderWidth: 5,
-    borderColor: "#6FFFE9",
+    backgroundColor: "white",
+    borderWidth: 2,
+    borderColor: "black",
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "flex-start",
@@ -58,12 +57,12 @@ const styles = StyleSheet.create({
   },
   picture: {
     height: 150,
-    width: 290,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    width: 296,
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
   },
   infos: {
-    backgroundColor: "#0B132B",
+    backgroundColor: "transparent",
     marginVertical: 15,
     borderStyle: "solid",
     borderColor: "#6FFFE9",
@@ -73,8 +72,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
+    color: "black",
   },
-  texto: {
+  address: {
     fontSize: 16,
+    color: "black",
+  },
+  shadowProp: {
+    shadowOffset: { width: 10, height: 8 },
+    shadowColor: "#171717",
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  star: {
+    position: "absolute",
+    right: -95,
   },
 });

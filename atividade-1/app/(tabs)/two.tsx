@@ -1,31 +1,38 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from "react-native";
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+import { ParkThumb } from "../../components/ParkThumb";
+import { parks } from "../../assets/parks/data.json";
+import colors from "../../constants/Colors";
 
-export default function TabTwoScreen() {
+export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Parques favoritos</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    <ScrollView bounces={true} contentContainerStyle={styles.container}>
+      {parks.map((park, i) => {
+        return park.favorite ? (
+          <ParkThumb key={i} park={park} reloadOnFavorite={true}></ParkThumb>
+        ) : (
+          ""
+        );
+      })}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: colors.dark.background,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
-    marginVertical: 30,
+    color: "#6f1d1b",
+    marginVertical: 10,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
 });

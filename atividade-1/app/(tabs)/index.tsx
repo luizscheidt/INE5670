@@ -1,13 +1,13 @@
 import { StyleSheet, ScrollView } from "react-native";
 
 import { ParkThumb } from "../../components/ParkThumb";
-import { Text, View } from "../../components/Themed";
 import { parks } from "../../assets/parks/data.json";
+import colors from "../../constants/Colors";
 
 export default function TabOneScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {parks.map(function (park, i) {
+    <ScrollView bounces={true} contentContainerStyle={styles.container}>
+      {parks.map((park, i) => {
         return <ParkThumb key={i} park={park}></ParkThumb>;
       })}
     </ScrollView>
@@ -16,6 +16,7 @@ export default function TabOneScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.dark.background,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
