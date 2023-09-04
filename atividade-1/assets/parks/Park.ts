@@ -1,4 +1,9 @@
+import { useState } from "react";
+import { parksData } from "./data.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export type Park = {
+  id: string;
   name: string;
   address: string;
   open: string; // Opening hour
@@ -15,3 +20,21 @@ export type Park = {
   email: string;
   favorite?: boolean;
 };
+
+export async function getParks() {
+  var parks = await AsyncStorage.getItem("parks");
+  if (!parks) {
+    let parksJSON = parksData;
+    AsyncStorage.setItem("parks", JSON.stringify(parksJSON));
+    return parksJSON;
+  }
+
+  return JSON.parse(parks);
+}
+
+export async function setPark(id: string, data: Park) {
+  let parks = await getParks();
+  parks[id] = data;
+
+  AsyncStorage.setItem("parks", JSON.stringify(parks));
+}

@@ -1,6 +1,7 @@
 {
-  "parks": [
-    {
+  "parksData": {
+    "0": {
+      "id": "0",
       "name": "Beto Carrero",
       "address": "Penha, SC",
       "open": "10:00",
@@ -22,10 +23,10 @@
       "buy": "https://www.betocarrero.com.br/passaportes",
       "phone": "+55 47 3261-2222",
       "email": "suporteonline@betocarrero.com.br",
-      "favorite": true
+      "favorite": false
     },
-
-    {
+    "1": {
+      "id": "1",
       "name": "Água Show",
       "address": "Florianópolis, SC",
       "open": "10:00",
@@ -46,9 +47,11 @@
       "price": 70,
       "buy": "https://www.aguashowpark.com.br/loja/",
       "phone": "+55 48 3369-2354",
-      "email": "aguashowpark@aguashowpark.com.br"
+      "email": "aguashowpark@aguashowpark.com.br",
+      "favorite": false
     },
-    {
+    "2": {
+      "id": "2",
       "name": "Hopi Hari",
       "address": "Vinhedo, SP",
       "open": "11:00",
@@ -69,9 +72,11 @@
       "price": 129.9,
       "buy": "https://www.hopihari.com.br/temporadaInstitucional?gad=1&gclid=Cj0KCQjw3JanBhCPARIsAJpXTx4HigHYogKVNmcQvjEGzpQpLNwtQQWpTn-2Xt3EjDa5K9Hz1H7pffYaAnlIEALw_wcB",
       "phone": "+55 (11) 4210-4000",
-      "email": "fale@hopiharicorp.com.br"
+      "email": "fale@hopiharicorp.com.br",
+      "favorite": false
     },
-    {
+    "3": {
+      "id": "3",
       "name": "Mirabilândia",
       "address": "Olinda, PE",
       "open": "14:00",
@@ -92,9 +97,11 @@
       "price": 110,
       "buy": "https://loja.mirabilandia.com.br/",
       "phone": "+55 (81) 3366-2000",
-      "email": "sac@mirabilandia.com.br"
+      "email": "sac@mirabilandia.com.br",
+      "favorite": false
     },
-    {
+    "4": {
+      "id": "4",
       "name": "Parque da Mônica",
       "address": "Jurubatuba, SP",
       "open": "10:30",
@@ -115,7 +122,8 @@
       "price": 119,
       "buy": "https://ecommerce.parquedamonica.com.br/",
       "phone": "+55 11 5693-2200",
-      "email": "sav@parquedamonica.com.br"
+      "email": "sav@parquedamonica.com.br",
+      "favorite": false
     }
-  ]
+  }
 }
