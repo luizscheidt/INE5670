@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import { Text, View } from "./Themed";
+import { Text } from "./Themed";
 import { useState } from "react";
 import { Park, setPark } from "../assets/parks/Park";
+import { router } from "expo-router";
 
 type ParkThumbProps = {
   park: Park;
@@ -15,34 +16,39 @@ export function ParkThumb(props: ParkThumbProps) {
   const [park, setParkState] = useState(props.park);
 
   return (
-    <View style={[styles.parkContainer, styles.shadowProp]}>
-      <View style={styles.infos}>
-        <View style={styles.header}>
-          <FontAwesome
-            onPress={() => {
-              park.favorite = !park.favorite;
-
-              setParkState(park);
-              setPark(park.id, park).then(() => {
-                if (props.onFavorite) {
-                  props.onFavorite();
-                }
-              });
-            }}
-            style={styles.star}
-            name={park.favorite ? "star" : "star-o"}
-            size={28}
-            color="#e1b704"
-          ></FontAwesome>
-          <Text style={styles.title}>{park.name}</Text>
+    <TouchableOpacity
+      onPress={() => {
+        router.replace(`/parkInfo?id=${park.id}`);
+      }}
+    >
+      <View style={[styles.parkContainer, styles.shadowProp]}>
+        <View style={styles.infos}>
+          <View style={styles.header}>
+            <FontAwesome
+              onPress={() => {
+                park.favorite = !park.favorite;
+                setParkState(park);
+                setPark(park.id, park).then(() => {
+                  if (props.onFavorite) {
+                    props.onFavorite();
+                  }
+                });
+              }}
+              style={styles.star}
+              name={park.favorite ? "star" : "star-o"}
+              size={28}
+              color="#e1b704"
+            ></FontAwesome>
+            <Text style={styles.title}>{park.name}</Text>
+          </View>
+          <Text style={styles.address}>{park.address}</Text>
         </View>
-        <Text style={styles.address}>{park.address}</Text>
+        <Image
+          style={styles.picture}
+          source={{ uri: park.thumb, method: "GET" }}
+        />
       </View>
-      <Image
-        style={styles.picture}
-        source={{ uri: park.thumb, method: "GET" }}
-      />
-    </View>
+    </TouchableOpacity>
   );
 }
 

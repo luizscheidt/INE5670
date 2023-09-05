@@ -39,10 +39,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  separator: {
-    color: "#6f1d1b",
-    marginVertical: 10,
-    height: 1,
-    width: "80%",
-  },
 });
