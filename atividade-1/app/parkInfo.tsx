@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
   Image,
   StyleSheet,
@@ -7,7 +5,6 @@ import {
   View,
   ScrollView,
   Linking,
-  Button
 } from "react-native";
 
 import { Text } from "../components/Themed";
@@ -15,13 +12,11 @@ import { getParks } from "../assets/parks/Park";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useGlobalSearchParams, router } from "expo-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import colors from "../constants/Colors";
-import { Video, ResizeMode } from 'expo-av';
-
-
+import { Video, ResizeMode } from "expo-av";
 
 export default function ModalScreen() {
   const [park, setPark] = useState({
@@ -39,9 +34,6 @@ export default function ModalScreen() {
     phone: "",
     email: "",
   });
-  const [slideList, setSlideList] = useState([
-    { id: 0, image: "", title: "", subtitle: "" },
-  ]);
   const [reload, setReload] = useState(false);
   const params = useGlobalSearchParams();
   const mapRegion = {
@@ -50,8 +42,7 @@ export default function ModalScreen() {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
-  const video = React.useRef(null);
-  const [status, setStatus] = React.useState({});
+  const video = useRef(null);
 
   function fetchPark() {
     getParks().then((parks) => {
@@ -64,7 +55,6 @@ export default function ModalScreen() {
           subtitle: `This is the subtitle ${i + 1}!`,
         };
       });
-      setSlideList(slideList);
     });
   }
   useEffect(fetchPark, [reload]);
@@ -166,22 +156,19 @@ export default function ModalScreen() {
             {park.email}
           </Text>
         </View>
-
-        <View style={styles.container}>
-      <Video
-        ref={video}
-        style={styles.video}
-        source={{
-          uri: park.video ,
-        }}
-        useNativeControls
-        resizeMode={ResizeMode.CONTAIN}
-        isLooping
-        onPlaybackStatusUpdate={status => setStatus(() => status)}
-      />
-    </View>
-  );
-
+        <Text style={[styles.title, styles.infoHeader]}>Vídeo:</Text>
+        <Video
+          ref={video}
+          style={styles.video}
+          source={{
+            uri: park.video,
+          }}
+          useNativeControls
+          resizeMode={ResizeMode.CONTAIN}
+          isMuted={true}
+          shouldPlay={true}
+          onPlaybackStatusUpdate={() => {}}
+        />
         <Text style={[styles.title, styles.infoHeader]}>Localização:</Text>
         <MapView region={mapRegion} style={{ height: 250 }}>
           <Marker coordinate={mapRegion} title="Marker"></Marker>
@@ -261,9 +248,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   video: {
-    justifyContent:'center', 
-    alignItems: 'center', 
+    height: 190,
+    justifyContent: "center",
+    alignItems: "center",
     flex: 1,
-    flexDirection: 'column',
-  }
+    flexDirection: "column",
+  },
 });
