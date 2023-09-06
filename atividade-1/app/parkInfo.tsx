@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import {
   Image,
   StyleSheet,
@@ -5,6 +7,7 @@ import {
   View,
   ScrollView,
   Linking,
+  Button
 } from "react-native";
 
 import { Text } from "../components/Themed";
@@ -16,6 +19,9 @@ import { useState, useEffect } from "react";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import colors from "../constants/Colors";
+import { Video, ResizeMode } from 'expo-av';
+
+
 
 export default function ModalScreen() {
   const [park, setPark] = useState({
@@ -44,6 +50,8 @@ export default function ModalScreen() {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
 
   function fetchPark() {
     getParks().then((parks) => {
@@ -158,6 +166,22 @@ export default function ModalScreen() {
             {park.email}
           </Text>
         </View>
+
+        <View style={styles.container}>
+      <Video
+        ref={video}
+        style={styles.video}
+        source={{
+          uri: park.video ,
+        }}
+        useNativeControls
+        resizeMode={ResizeMode.CONTAIN}
+        isLooping
+        onPlaybackStatusUpdate={status => setStatus(() => status)}
+      />
+    </View>
+  );
+
         <Text style={[styles.title, styles.infoHeader]}>Localização:</Text>
         <MapView region={mapRegion} style={{ height: 250 }}>
           <Marker coordinate={mapRegion} title="Marker"></Marker>
@@ -236,4 +260,10 @@ const styles = StyleSheet.create({
     height: 1,
     width: "100%",
   },
+  video: {
+    justifyContent:'center', 
+    alignItems: 'center', 
+    flex: 1,
+    flexDirection: 'column',
+  }
 });
