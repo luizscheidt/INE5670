@@ -24,9 +24,8 @@ export type Park = {
 export async function getParks() {
   var parks = await AsyncStorage.getItem("parks");
   if (!parks) {
-    let parksJSON = parksData;
-    AsyncStorage.setItem("parks", JSON.stringify(parksJSON));
-    return parksJSON;
+    AsyncStorage.setItem("parks", JSON.stringify(parksData));
+    return parksData;
   }
 
   return JSON.parse(parks);
