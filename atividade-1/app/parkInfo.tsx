@@ -22,6 +22,7 @@ export default function ModalScreen() {
   const [park, setPark] = useState({
     name: "",
     address: "",
+    longAddress: "",
     open: "",
     close: "",
     lat: "0",
@@ -99,7 +100,7 @@ export default function ModalScreen() {
         <View style={styles.infoItem}>
           <View style={styles.infoPair}>
             <Text style={styles.infoText}>Endereço:</Text>
-            <Text style={styles.infoValue}>{park.address}</Text>
+            <Text style={styles.infoValue}>{park.longAddress}</Text>
           </View>
           <View style={styles.infoPair}>
             <Text style={styles.infoText}>Horário:</Text>
@@ -114,9 +115,7 @@ export default function ModalScreen() {
             <Text style={styles.infoText}>Preço:</Text>
             <Text style={styles.infoValue}>R$: {park.price}</Text>
           </View>
-          <Text style={[{ marginLeft: 12 }, styles.infoText]}>
-            Onde comprar:
-          </Text>
+          <Text style={styles.infoText}>Onde comprar:</Text>
           <Text onPress={() => Linking.openURL(park.buy)} style={styles.link}>
             {park.buy}
           </Text>
@@ -148,7 +147,7 @@ export default function ModalScreen() {
               {park.phone}
             </Text>
           </View>
-          <Text style={[{ marginLeft: 55 }, styles.infoText]}>Email:</Text>
+          <Text style={styles.infoText}>Email:</Text>
           <Text
             style={styles.link}
             onPress={() => Linking.openURL(`mailto:${park.email}`)}
@@ -203,9 +202,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   infoPair: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    marginBottom: 20,
   },
   infoHeader: {
     marginLeft: 15,
