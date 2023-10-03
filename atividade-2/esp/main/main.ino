@@ -9,7 +9,8 @@
 
 #define SS_PIN 4   //D2
 #define RST_PIN 5  //D1
-#define LED 0  //D3
+#define LED_FAIL 0  //D3
+#define LED_SUCCESS 15  //D8
 
 WiFiClient client; // Cliente wifi
 
@@ -23,7 +24,12 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 void setup() {
   Serial.begin(9600);
 
-  WiFi.begin("AP406", "31234578");       
+  pinMode(LED_FAIL, OUTPUT);
+  pinMode(LED_SUCCESS, OUTPUT);
+  digitalWrite(LED_FAIL, LOW);
+  digitalWrite(LED_SUCCESS, LOW);
+
+  WiFi.begin("Francisco iPhone", "fran1234");       
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.println("Conectando ao Wifi..."); 
@@ -31,15 +37,13 @@ void setup() {
 
   SPI.begin();
   mfrc522.PCD_Init();  // Inicia Leitor de cartão
-
-  pinMode(LED, OUTPUT);
 }
 
 void getConfig() {
   Serial.println("\nBuscando dados de acesso"); 
   if (WiFi.status() == WL_CONNECTED) {                   
     HTTPClient http;
-    http.begin(client, "http://192.168.0.67:8080/config"); 
+    http.begin(client, "http://172.20.10.8:8080/config"); 
     int httpCode = http.GET();                          
     
     if (httpCode == 200) {
@@ -62,7 +66,7 @@ void getConfig() {
 void postLog(String data) {
   if (WiFi.status() == WL_CONNECTED) {                   
      HTTPClient http;
-     http.begin(client, "http://192.168.0.67:8080/log");  
+     http.begin(client, "http://172.20.10.8:8080/log");  
      int httpCode = http.POST(data); 
      http.end();                                         
   } else { 
@@ -71,21 +75,22 @@ void postLog(String data) {
 }
 
 void loop() {
-  digitalWrite(LED, LOW);
+  digitalWrite(LED_FAIL, LOW);
+  digitalWrite(LED_SUCCESS, LOW);
 
-  // Esperar novos cartões.
   time_t ts = time(NULL);
   if (lastConfigFetch == 0 || ts - lastConfigFetch > 30) {
     lastConfigFetch = ts;
     getConfig();
   }
 
+  // Esperar novos cartões.
   if (!mfrc522.PICC_IsNewCardPresent()) {
     delay(100);
     return;
   }
 
-  //Faça a leitura do ID do cartão
+  // Faça a leitura do ID do cartão
   if (mfrc522.PICC_ReadCardSerial()) {
     String rfid_data = "";
     for (uint8_t i = 0; i < mfrc522.uid.size; i++) {
@@ -97,7 +102,7 @@ void loop() {
     JsonObject obj = doc.as<JsonObject>();
 
     bool allowed = false;
-    for (long i = 0; i < obj.size(); i++) {
+    for (long i = 0; i < obj["keys"].size(); i++) {
       if (obj["keys"][i] == rfid_data) {
         allowed = true;
       }
@@ -116,9 +121,14 @@ void loop() {
     Serial.println(rfid_data);
 
     String allowed_key = allowed ? "1" : "0";
+    // {"key": rfid_data, "success": allowed}
     postLog("{\"key\":\"" + rfid_data + "\",\"success\":" + allowed_key + "}");
 
-    digitalWrite(LED, HIGH);
+    if (allowed) {
+      digitalWrite(LED_SUCCESS, HIGH);
+    } else {
+      digitalWrite(LED_FAIL, HIGH);
+    }
 
     delay(1000);
   }

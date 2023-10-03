@@ -74,8 +74,8 @@ async fn main() {
         .get("/config", serve_config)
         .post("/log", log);
 
-    info!("Servidor inicializado em http://192.168.0.67:8080");
-    _ = hyper::Server::bind(&([192, 168, 0, 67], 8080).into())
+    info!("Servidor inicializado em http://172.20.10.8:8080");
+    _ = hyper::Server::bind(&([172, 20, 10, 8], 8080).into())
         .serve(router.into_service())
         .await;
 }
