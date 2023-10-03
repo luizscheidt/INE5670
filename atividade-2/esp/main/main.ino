@@ -6,11 +6,10 @@
 #include <vector>
 #include <ArduinoJson.h>
 
-
-#define SS_PIN 4   //D2
-#define RST_PIN 5  //D1
-#define LED_FAIL 0  //D3
-#define LED_SUCCESS 15  //D8
+#define SS_PIN 4       // D2
+#define RST_PIN 5      // D1
+#define LED_FAIL 0     // D3
+#define LED_SUCCESS 15 // D8
 
 WiFiClient client; // Cliente wifi
 
@@ -21,7 +20,8 @@ time_t lastConfigFetch = 0;
 // Cria um objeto  MFRC522.
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
 
   pinMode(LED_FAIL, OUTPUT);
@@ -29,71 +29,88 @@ void setup() {
   digitalWrite(LED_FAIL, LOW);
   digitalWrite(LED_SUCCESS, LOW);
 
-  WiFi.begin("Francisco iPhone", "fran1234");       
-  while (WiFi.status() != WL_CONNECTED) {
+  WiFi.begin("", "");
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(500);
-    Serial.println("Conectando ao Wifi..."); 
-  } 
+    Serial.println("Conectando ao Wifi...");
+  }
 
   SPI.begin();
-  mfrc522.PCD_Init();  // Inicia Leitor de cartão
+  mfrc522.PCD_Init(); // Inicia Leitor de cartão
 }
 
-void getConfig() {
-  Serial.println("\nBuscando dados de acesso"); 
-  if (WiFi.status() == WL_CONNECTED) {                   
+void getConfig()
+{
+  Serial.println("\nBuscando dados de acesso");
+  if (WiFi.status() == WL_CONNECTED)
+  {
     HTTPClient http;
-    http.begin(client, "http://172.20.10.8:8080/config"); 
-    int httpCode = http.GET();                          
-    
-    if (httpCode == 200) {
-      String payload = http.getString();   
-      
+    http.begin(client, "http://...:8080/config");
+    int httpCode = http.GET();
+
+    if (httpCode == 200)
+    {
+      String payload = http.getString();
+
       deserializeJson(doc, payload);
 
       Serial.println("Dados de accesso adquiridos!");
-    } else {
+    }
+    else
+    {
       Serial.print("Erro buscando configuração");
       Serial.println(http.errorToString(httpCode));
     }
 
-    http.end();                                         
-  } else { 
-    Serial.println("Erro com conexão Wifi"); 
+    http.end();
+  }
+  else
+  {
+    Serial.println("Erro com conexão Wifi");
   }
 }
 
-void postLog(String data) {
-  if (WiFi.status() == WL_CONNECTED) {                   
-     HTTPClient http;
-     http.begin(client, "http://172.20.10.8:8080/log");  
-     int httpCode = http.POST(data); 
-     http.end();                                         
-  } else { 
-    Serial.println("Erro com conexão Wifi"); 
+void postLog(String data)
+{
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    HTTPClient http;
+    http.begin(client, "http://...:8080/log");
+    int httpCode = http.POST(data);
+    http.end();
+  }
+  else
+  {
+    Serial.println("Erro com conexão Wifi");
   }
 }
 
-void loop() {
+void loop()
+{
   digitalWrite(LED_FAIL, LOW);
   digitalWrite(LED_SUCCESS, LOW);
 
   time_t ts = time(NULL);
-  if (lastConfigFetch == 0 || ts - lastConfigFetch > 30) {
+  if (lastConfigFetch == 0 || ts - lastConfigFetch > 30)
+  {
     lastConfigFetch = ts;
     getConfig();
   }
 
   // Esperar novos cartões.
-  if (!mfrc522.PICC_IsNewCardPresent()) {
+  if (!mfrc522.PICC_IsNewCardPresent())
+  {
     delay(100);
     return;
   }
 
   // Faça a leitura do ID do cartão
-  if (mfrc522.PICC_ReadCardSerial()) {
+  if (mfrc522.PICC_ReadCardSerial())
+  {
     String rfid_data = "";
-    for (uint8_t i = 0; i < mfrc522.uid.size; i++) {
+    for (uint8_t i = 0; i < mfrc522.uid.size; i++)
+    {
       rfid_data.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : ""));
       rfid_data.concat(String(mfrc522.uid.uidByte[i], HEX));
     }
@@ -102,8 +119,10 @@ void loop() {
     JsonObject obj = doc.as<JsonObject>();
 
     bool allowed = false;
-    for (long i = 0; i < obj["keys"].size(); i++) {
-      if (obj["keys"][i] == rfid_data) {
+    for (long i = 0; i < obj["keys"].size(); i++)
+    {
+      if (obj["keys"][i] == rfid_data)
+      {
         allowed = true;
       }
     }
@@ -113,9 +132,12 @@ void loop() {
     String cpf = obj["info"][rfid_data]["CPF"];
     Serial.println("CPF: " + cpf);
 
-    if (allowed) {
+    if (allowed)
+    {
       Serial.print("Accesso permitido, chave: ");
-    } else {
+    }
+    else
+    {
       Serial.print("Accesso negado, chave: ");
     }
     Serial.println(rfid_data);
@@ -124,9 +146,12 @@ void loop() {
     // {"key": rfid_data, "success": allowed}
     postLog("{\"key\":\"" + rfid_data + "\",\"success\":" + allowed_key + "}");
 
-    if (allowed) {
+    if (allowed)
+    {
       digitalWrite(LED_SUCCESS, HIGH);
-    } else {
+    }
+    else
+    {
       digitalWrite(LED_FAIL, HIGH);
     }
 
