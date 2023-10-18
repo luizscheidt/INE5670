@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const sqlite3 = require("sqlite3");
 
-var db = new sqlite3.Database("./dados.db", (err) => {
+var db = new sqlite3.Database("./dados/dados.db", (err) => {
   if (err) {
     console.log("ERRO: não foi possível conectar ao SQLite.");
     throw err;
@@ -86,7 +86,7 @@ app.patch("/cadastro/:cpf", (req, res, next) => {
         SET "nome" = COALESCE(?, "nome"),
             "email" = COALESCE(?, "email"),
             "fone" = COALESCE(?, "fone")
-        WHERE "cpf" = ?`,
+      WHERE "cpf" = ?`,
     [
       req.body.nome,
       req.body.email,
@@ -108,16 +108,20 @@ app.patch("/cadastro/:cpf", (req, res, next) => {
 });
 
 app.delete("/cadastro/:cpf", (req, res, next) => {
-  db.run(`DELETE FROM cadastro WHERE cpf = ?`, req.params.cpf, function (err) {
-    if (err) {
-      res.status(500).send("Erro ao remover cliente.");
-    } else if (this.changes === 0) {
-      console.log("Cliente não encontrado.");
-      res.status(404).send("Cliente não encontrado.");
-    } else {
-      res.status(200).send("Cliente removido com sucesso!");
+  db.run(
+    `DELETE FROM "cadastro" WHERE "cpf" = ?`,
+    req.params.cpf,
+    function (err) {
+      if (err) {
+        res.status(500).send("Erro ao remover cliente.");
+      } else if (this.changes === 0) {
+        console.log("Cliente não encontrado.");
+        res.status(404).send("Cliente não encontrado.");
+      } else {
+        res.status(200).send("Cliente removido com sucesso!");
+      }
     }
-  });
+  );
 });
 
 let porta = 8080;

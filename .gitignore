@@ -1,1 +1,3 @@
 atividade-2/servidor/target
+node_modules
+dados.db
