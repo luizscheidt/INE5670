@@ -9,12 +9,12 @@ const sqlite3 = require("sqlite3");
 
 const STATUS_PATINETE = [0, 1, 2]; // 0 = disponivel, 1 = alugado, 2 = nao operante
 
-var db = new sqlite3.Database("./dados/dados.db", (err) => {
+var db = new sqlite3.Database("cadastro-patinete/dados/dados.db", (err) => {
   if (err) {
     console.log("ERRO: não foi possível conectar ao SQLite.");
     throw err;
   }
-  console.log("Conectado ao SQLite!");
+  console.log("Conectado à base de dados!");
 });
 
 db.run(
