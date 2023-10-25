@@ -6,9 +6,15 @@ var logger = require("morgan");
 app.use(logger("dev"));
 
 function selectProxyHost(req) {
-  if (req.path.startsWith("/cadastro")) return "http://127.0.0.1:8080/";
-  else if (req.path.startsWith("/patinete")) return "http://127.0.0.1:8081/";
-  else return null;
+  if (req.path.startsWith("/cadastro")) {
+    return "http://127.0.0.1:8080/";
+  } else if (req.path.startsWith("/patinete")) {
+    return "http://127.0.0.1:8081/";
+  } else if (req.path.startsWith("/aluguel")) {
+    return "http://127.0.0.1:8082/";
+  } else if (req.path.startsWith("/controle-patinete")) {
+    return "http://127.0.0.1:8083/";
+  }
 }
 
 app.use((req, res, next) => {

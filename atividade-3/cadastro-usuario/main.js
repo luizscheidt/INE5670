@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const sqlite3 = require("sqlite3");
 
-var db = new sqlite3.Database("cadastro-usuario/dados/dados.db", (err) => {
+var db = new sqlite3.Database("dados/dados.db", (err) => {
   if (err) {
     console.log("ERRO: não foi possível conectar ao SQLite.");
     throw err;

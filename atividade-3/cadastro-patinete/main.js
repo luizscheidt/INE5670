@@ -9,7 +9,7 @@ const sqlite3 = require("sqlite3");
 
 const STATUS_PATINETE = [0, 1, 2]; // 0 = disponivel, 1 = alugado, 2 = nao operante
 
-var db = new sqlite3.Database("cadastro-patinete/dados/dados.db", (err) => {
+var db = new sqlite3.Database("dados/dados.db", (err) => {
   if (err) {
     console.log("ERRO: não foi possível conectar ao SQLite.");
     throw err;
@@ -37,7 +37,7 @@ app.post("/patinete", (req, res, next) => {
     res
       .status(400)
       .send(
-        "Status deve ser um número inteiro de 0 a 2. (0 = disponivel, 1 = alugado, 2 = não operante"
+        "Status deve ser um número inteiro de 0 a 2. (0 = disponivel, 1 = alugado, 2 = não operante)"
       );
   }
 
