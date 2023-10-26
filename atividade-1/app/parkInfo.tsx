@@ -12,15 +12,17 @@ import { getParks } from "../assets/parks/Park";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useGlobalSearchParams, router } from "expo-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import colors from "../constants/Colors";
+import { Video, ResizeMode } from "expo-av";
 
 export default function ModalScreen() {
   const [park, setPark] = useState({
     name: "",
     address: "",
+    longAddress: "",
     open: "",
     close: "",
     lat: "0",
@@ -33,9 +35,6 @@ export default function ModalScreen() {
     phone: "",
     email: "",
   });
-  const [slideList, setSlideList] = useState([
-    { id: 0, image: "", title: "", subtitle: "" },
-  ]);
   const [reload, setReload] = useState(false);
   const params = useGlobalSearchParams();
   const mapRegion = {
@@ -44,6 +43,7 @@ export default function ModalScreen() {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
+  const video = useRef(null);
 
   function fetchPark() {
     getParks().then((parks) => {
@@ -56,7 +56,6 @@ export default function ModalScreen() {
           subtitle: `This is the subtitle ${i + 1}!`,
         };
       });
-      setSlideList(slideList);
     });
   }
   useEffect(fetchPark, [reload]);
@@ -101,7 +100,7 @@ export default function ModalScreen() {
         <View style={styles.infoItem}>
           <View style={styles.infoPair}>
             <Text style={styles.infoText}>Endereço:</Text>
-            <Text style={styles.infoValue}>{park.address}</Text>
+            <Text style={styles.infoValue}>{park.longAddress}</Text>
           </View>
           <View style={styles.infoPair}>
             <Text style={styles.infoText}>Horário:</Text>
@@ -116,9 +115,7 @@ export default function ModalScreen() {
             <Text style={styles.infoText}>Preço:</Text>
             <Text style={styles.infoValue}>R$: {park.price}</Text>
           </View>
-          <Text style={[{ marginLeft: 12 }, styles.infoText]}>
-            Onde comprar:
-          </Text>
+          <Text style={styles.infoText}>Onde comprar:</Text>
           <Text onPress={() => Linking.openURL(park.buy)} style={styles.link}>
             {park.buy}
           </Text>
@@ -150,7 +147,7 @@ export default function ModalScreen() {
               {park.phone}
             </Text>
           </View>
-          <Text style={[{ marginLeft: 55 }, styles.infoText]}>Email:</Text>
+          <Text style={styles.infoText}>Email:</Text>
           <Text
             style={styles.link}
             onPress={() => Linking.openURL(`mailto:${park.email}`)}
@@ -158,6 +155,19 @@ export default function ModalScreen() {
             {park.email}
           </Text>
         </View>
+        <Text style={[styles.title, styles.infoHeader]}>Vídeo:</Text>
+        <Video
+          ref={video}
+          style={styles.video}
+          source={{
+            uri: park.video,
+          }}
+          useNativeControls
+          resizeMode={ResizeMode.CONTAIN}
+          isMuted={true}
+          shouldPlay={true}
+          onPlaybackStatusUpdate={() => {}}
+        />
         <Text style={[styles.title, styles.infoHeader]}>Localização:</Text>
         <MapView region={mapRegion} style={{ height: 250 }}>
           <Marker coordinate={mapRegion} title="Marker"></Marker>
@@ -192,9 +202,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   infoPair: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    marginBottom: 20,
   },
   infoHeader: {
     marginLeft: 15,
@@ -235,5 +243,12 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     height: 1,
     width: "100%",
+  },
+  video: {
+    height: 190,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "column",
   },
 });

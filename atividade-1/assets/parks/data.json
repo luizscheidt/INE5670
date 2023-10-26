@@ -4,6 +4,7 @@
       "id": "0",
       "name": "Beto Carrero",
       "address": "Penha, SC",
+      "longAddress": "R. Inácio Francisco de Souza, 1597, Penha/SC",
       "open": "10:00",
       "close": "19:00",
       "lat": "-26.799",
@@ -14,7 +15,7 @@
         "https://www.viagensecaminhos.com/wp-content/uploads/2011/02/montanha-russa-beto-carrero-world.jpg",
         "https://vipzinho.com.br/wp-content/uploads/2018/10/Beto-Carrero.jpg"
       ],
-      "video": "https://youtu.be/f_73sawzBOc",
+      "video": "https://media.istockphoto.com/id/1327773677/pt/v%C3%ADdeo/dad-and-daughter-ride-extreme-attraction-adrenaline-and-fun-in-amusement-park.mp4?s=mp4-640x640-is&k=20&c=jJ_whI2SuqgebUHi7On5EjldRoBWmi2153cIAVjmak8=",
       "social": [
         "https://www.betocarrero.com.br/",
         "https://www.instagram.com/betocarrero/?hl=pt-br"
@@ -29,6 +30,7 @@
       "id": "1",
       "name": "Água Show",
       "address": "Florianópolis, SC",
+      "longAddress": "Rodovia Armando Calil Bullos, 3868, Florianópolis/SC",
       "open": "10:00",
       "close": "17:00",
       "lat": "-27.444",
@@ -39,7 +41,7 @@
         "https://media.tacdn.com/media/attractions-splice-spp-674x446/06/67/ba/d6.jpg",
         "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/04/0a/28/5d/agua-show-park.jpg?w=1200&h=-1&s=1"
       ],
-      "video": "https://www.youtube.com/watch?v=lFG-ihSXuVo ",
+      "video": "https://media.istockphoto.com/id/1181636412/pt/v%C3%ADdeo/this-is-what-a-world-of-fun-looks-like.mp4?s=mp4-640x640-is&k=20&c=FunjOCjcQae3ZU2lJaJup4Ot-uXgYLjmT56e5yEWi04=",
       "social": [
         "https://www.aguashowpark.com.br/",
         "https://www.instagram.com/aguashowpark/"
@@ -54,6 +56,7 @@
       "id": "2",
       "name": "Hopi Hari",
       "address": "Vinhedo, SP",
+      "longAddress": "Rodovia dos Bandeirantes, km 72, Vinhedo/SP",
       "open": "11:00",
       "close": "20:30",
       "lat": "-22.848",
@@ -64,7 +67,7 @@
         "https://i0.statig.com.br/hopihari/img/DJI_0066-3.jpg",
         "https://blog.hopihari.com.br/wp-content/uploads/2021/09/ANDY1610_Easy-Resize.com_-e1631628038563.jpg"
       ],
-      "video": "https://www.youtube.com/watch?v=eAJudPGXvac",
+      "video": "https://media.istockphoto.com/id/999455094/pt/v%C3%ADdeo/three-children-and-parents-on-a-log-ride-at-an-amusement-park-having-fun.mp4?s=mp4-640x640-is&k=20&c=y4H3VN-O6DgDRXp2WC_UrzpobZFsGA7K00WP286Ysak=",
       "social": [
         "https://www.hopihari.com.br/temporadaInstitucional?gad=1&gclid=Cj0KCQjw3JanBhCPARIsAJpXTx4TxoNbl4uRVuS5t_yfaquTTxajClDA_URuWXlfVChq_wfBmmb1LhIaAhBXEALw_wcB",
         "https://www.instagram.com/hopihari/"
@@ -79,6 +82,7 @@
       "id": "3",
       "name": "Mirabilândia",
       "address": "Olinda, PE",
+      "longAddress": "Av. Prof. Andrade Bezerra, 1285, Olinda/PE",
       "open": "14:00",
       "close": "20:00",
       "lat": "-8.0327",
@@ -89,7 +93,7 @@
         "https://thiagolagos.com.br/wp-content/uploads/2015/01/IMG_1452.jpg",
         "https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2023/03/15/mirabilandia_recife-22552156.jpg"
       ],
-      "video": "https://www.youtube.com/watch?v=LsdklcaThb0",
+      "video": "https://media.istockphoto.com/id/1327773677/pt/v%C3%ADdeo/dad-and-daughter-ride-extreme-attraction-adrenaline-and-fun-in-amusement-park.mp4?s=mp4-640x640-is&k=20&c=jJ_whI2SuqgebUHi7On5EjldRoBWmi2153cIAVjmak8=",
       "social": [
         "https://mirabilandia.com.br/",
         "https://www.instagram.com/mirabilandiape/"
@@ -104,17 +108,18 @@
       "id": "4",
       "name": "Parque da Mônica",
       "address": "Jurubatuba, SP",
+      "longAddress": "Av. das Nações Unidas, 22540, São Paulo/SP",
       "open": "10:30",
       "close": "18:00",
       "lat": "-23.678",
       "lng": "-46.698",
-      "thumb": "https://m.parquedamonica.com.br/mobile/imagens/sobre-o-parque-destaque.jpg",
+      "thumb": "https://www.falandodeviagem.com.br/imagens21/parque_monica3.jpg",
       "imgs": [
         "https://yata-apix-24dc2f72-4c2c-4528-b836-b7a1df47cbe1.s3-object.locaweb.com.br/9198dc42418a4a2aaca49ac1607298e1.jpg",
         "https://g1.globo.com/Noticias/SaoPaulo/foto/0,,21260083-EX,00.jpg",
         "https://www.falandodeviagem.com.br/imagens21/parque_monica3.jpg"
       ],
-      "video": "https://www.youtube.com/watch?v=Gp6lH9nfwrU",
+      "video": "https://media.istockphoto.com/id/1209583961/pt/v%C3%ADdeo/enjoy-amusement-fun-park-concept-asian-mother-and-daughter-eating-ice-cream-in-an-amusement.mp4?s=mp4-640x640-is&k=20&c=g69RAorerum1nOmJWmZL1SxajDqepFX2y9d5sbyJjR0=",
       "social": [
         "https://ecommerce.parquedamonica.com.br/",
         "https://www.instagram.com/parquedamonica/"
