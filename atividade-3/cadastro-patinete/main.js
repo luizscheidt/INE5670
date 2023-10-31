@@ -99,7 +99,7 @@ app.get("/patinete/:serial", (req, res, next) => {
 
 app.patch("/patinete/:serial", (req, res, next) => {
   let status = null;
-  if (req.body.status) {
+  if (req.body.hasOwnProperty("status")) {
     status = parseInt(req.body.status, 10);
 
     if (!STATUS_PATINETE.includes(status)) {
@@ -111,13 +111,16 @@ app.patch("/patinete/:serial", (req, res, next) => {
     }
   }
 
-  db.run(
+  let query =
     `UPDATE "patinete"
-        SET "lat" = COALESCE(?, "lat"),
-            "lng" = COALESCE(?, "lng"),
-            "status" = COALESCE(?, "status")
-      WHERE "serial" = ?`,
-    [req.body.lat, req.body.lng, status, req.params.serial],
+  SET "lat" = COALESCE(?, "lat"),
+      "lng" = COALESCE(?, "lng")
+      ` +
+    (status !== null ? ', "status" = ' + status + " " : "") +
+    `WHERE "serial" = ?`;
+  db.run(
+    query,
+    [req.body.lat, req.body.lng, req.params.serial],
     function (err) {
       if (err) {
         console.log(err);
