@@ -14,6 +14,8 @@ function selectProxyHost(req) {
     return "http://127.0.0.1:8082/";
   } else if (req.path.startsWith("/controle-patinete")) {
     return "http://127.0.0.1:8083/";
+  } else if (req.path.startsWith("/pagamento")) {
+    return "http://127.0.0.1:8084/";
   }
 }
 

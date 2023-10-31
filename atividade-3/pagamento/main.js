@@ -27,7 +27,7 @@ db.run(
   }
 );
 
-app.post("/cartao", (req, res, next) => {
+app.post("/pagamento", (req, res, next) => {
   db.run(
     `INSERT INTO "cartao"("num", "cpf")
          VALUES (?, ?)`,
@@ -44,10 +44,10 @@ app.post("/cartao", (req, res, next) => {
   );
 });
 
-app.get("/cartao", (req, res, next) => {
+app.get("/pagamento", (req, res, next) => {
   db.all(
     `SELECT *
-         FROM "cartao"`,
+       FROM "cartao"`,
     (err, result) => {
       if (err) {
         console.log("Erro: " + err);
@@ -59,11 +59,11 @@ app.get("/cartao", (req, res, next) => {
   );
 });
 
-app.get("/cartao/:num", (req, res, next) => {
+app.get("/pagamento/:num", (req, res, next) => {
   db.get(
     `SELECT *
-         FROM "cartao"
-        WHERE "num" = ?`,
+       FROM "cartao"
+      WHERE "num" = ?`,
     req.params.cpf,
     (err, result) => {
       if (err) {
@@ -79,11 +79,11 @@ app.get("/cartao/:num", (req, res, next) => {
   );
 });
 
-app.patch("/cartao/:num", (req, res, next) => {
+app.patch("/pagamento/:num", (req, res, next) => {
   db.run(
     `UPDATE "cartao"
-          SET "cpf" = COALESCE(?, "cpf"),
-        WHERE "num" = ?`,
+        SET "cpf" = COALESCE(?, "cpf"),
+      WHERE "num" = ?`,
     [req.body.cpf, parseInt(req.params.num)],
     function (err) {
       if (err) {
@@ -99,7 +99,7 @@ app.patch("/cartao/:num", (req, res, next) => {
   );
 });
 
-app.delete("/cartao/:cpf", (req, res, next) => {
+app.delete("/pagamento/:cpf", (req, res, next) => {
   db.run(
     `DELETE FROM "cartao" WHERE "num" = ?`,
     req.params.num,
@@ -118,5 +118,5 @@ app.delete("/cartao/:cpf", (req, res, next) => {
 
 let porta = 8084;
 app.listen(porta, () => {
-  console.log("Serviço de usuários em execução: http://127.0.0.1:" + porta);
+  console.log("Serviço de pagamento em execução: http://127.0.0.1:" + porta);
 });
