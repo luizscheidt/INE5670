@@ -6,7 +6,7 @@ var logger = require("morgan");
 app.use(logger("dev"));
 
 function selectProxyHost(req) {
-  if (req.path.startsWith("/cadastro")) {
+  if (req.path.startsWith("/usuario")) {
     return "http://127.0.0.1:8080/";
   } else if (req.path.startsWith("/patinete")) {
     return "http://127.0.0.1:8081/";

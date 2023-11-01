@@ -152,6 +152,33 @@ app.delete("/patinete/:serial", (req, res, next) => {
   );
 });
 
+app.get("/patinete/localizar/:lat/:lng", (req, res, next) => {
+  let lat = parseInt(req.params.lat, 10);
+  let lng = parseInt(req.params.lng, 10);
+
+  if (!(lat && lng)) {
+    res.status(400).send("Latitude a longitude inválidas");
+  }
+
+  db.all(
+    `
+    SELECT *
+      FROM "patinete"
+     WHERE CAST("lat" AS REAL) BETWEEN ? AND ?
+       AND CAST("lng" AS REAL) BETWEEN ? AND ?
+       AND "status" = 0
+  `,
+    [lat - 1, lat + 1, lng - 1, lng + 1],
+    (err, result) => {
+      if (err) {
+        res.status(500).send("Erro ao localizar patinetes.");
+      } else {
+        res.status(200).json(result);
+      }
+    }
+  );
+});
+
 let porta = 8081;
 app.listen(porta, () => {
   console.log(

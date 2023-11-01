@@ -27,10 +27,36 @@ db.run(
   }
 );
 
+app.post("/pagamento/:cpf", (req, res, _) => {
+  console.log(parseInt(req.params.cpf, 10));
+  db.get(
+    `
+    SELECT "num"
+      FROM "cartao"
+     WHERE "cpf" = ?
+     LIMIT 1
+     `,
+    [parseInt(req.params.cpf, 10)],
+    (err, result) => {
+      if (err) {
+        console.log("Error: " + err);
+        res.status(500).send("Erro ao realizar pagamento.");
+      } else {
+        console.log(
+          `Pagamento de R$: ${req.body.valor} no cartão: ${result.num}`
+        );
+        res
+          .status(200)
+          .send(`Pagamento de R$: ${req.body.valor} no cartão: ${result.num}`);
+      }
+    }
+  );
+});
+
 app.post("/pagamento", (req, res, next) => {
   db.run(
     `INSERT INTO "cartao"("num", "cpf")
-         VALUES (?, ?)`,
+     VALUES (?, ?)`,
     [req.body.num, req.body.cpf],
     (err) => {
       if (err) {

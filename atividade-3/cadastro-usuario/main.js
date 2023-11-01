@@ -28,7 +28,7 @@ db.run(
   }
 );
 
-app.post("/cadastro", (req, res, next) => {
+app.post("/usuario", (req, res, next) => {
   db.run(
     `INSERT INTO "cadastro"("nome", "email", "cpf", "fone")
      VALUES (?, ?, ?, ?)`,
@@ -45,7 +45,7 @@ app.post("/cadastro", (req, res, next) => {
   );
 });
 
-app.get("/cadastro", (req, res, next) => {
+app.get("/usuario", (req, res, next) => {
   db.all(
     `SELECT *
        FROM "cadastro"`,
@@ -60,7 +60,7 @@ app.get("/cadastro", (req, res, next) => {
   );
 });
 
-app.get("/cadastro/:cpf", (req, res, next) => {
+app.get("/usuario/:cpf", (req, res, next) => {
   db.get(
     `SELECT *
        FROM "cadastro"
@@ -80,7 +80,7 @@ app.get("/cadastro/:cpf", (req, res, next) => {
   );
 });
 
-app.patch("/cadastro/:cpf", (req, res, next) => {
+app.patch("/usuario/:cpf", (req, res, next) => {
   db.run(
     `UPDATE "cadastro"
         SET "nome" = COALESCE(?, "nome"),
@@ -107,7 +107,7 @@ app.patch("/cadastro/:cpf", (req, res, next) => {
   );
 });
 
-app.delete("/cadastro/:cpf", (req, res, next) => {
+app.delete("/usuario/:cpf", (req, res, next) => {
   db.run(
     `DELETE FROM "cadastro" WHERE "cpf" = ?`,
     req.params.cpf,

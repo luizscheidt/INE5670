@@ -9,6 +9,8 @@ const sqlite3 = require("sqlite3");
 
 const axios = require("axios");
 
+const VALOR_POR_MINUTO = 0.85; // 85 centavos
+
 var db = new sqlite3.Database("dados/dados.db", (err) => {
   if (err) {
     console.log("ERRO: não foi possível conectar ao SQLite.");
@@ -139,32 +141,50 @@ app.post("/aluguel/encerra", async (req, res, next) => {
     method: "patch",
     url: "http://127.0.0.1:8000/controle-patinete/" + serial,
     data: { desbloquear: true },
-  })
-    .then(() => {
-      res.status(200).send("Aluguel encerrado!");
-    })
-    .catch((err) => {
-      console.log("Error", err);
-      res.status(500).send("Erro ao destravar patinete");
-    });
+  }).catch((err) => {
+    console.log("Error", err);
+    res.status(500).send("Erro ao destravar patinete");
+  });
 
-  db.run(
-    `
-    UPDATE "aluguel"
-       SET "final" = ?
-     WHERE "final" = 0
-       AND "cpf" = ?
-       AND "serial" = ?
+  let valor;
+  db.get(
+    `SELECT "inicio"
+       FROM "aluguel"
+      WHERE "final" = 0
+        AND "cpf" = ?
+        AND "serial" = ?
+      LIMIT 1
   `,
-    [ts, req.body.cpf, req.body.serial],
-    (err) => {
-      if (err) {
-        console.log("Error: " + err);
-        res.status(500).send("Erro ao encerrar aluguel.");
-      } else {
-        console.log("Aluguel iniciado!");
-        res.status(200).send("Aluguel encerrado!");
-      }
+    [req.body.cpf, req.body.serial],
+    (err, result) => {
+      valor = ((ts - result.inicio) / 60) * VALOR_POR_MINUTO;
+      db.run(
+        `
+          UPDATE "aluguel"
+             SET "final" = ?
+           WHERE "final" = 0
+             AND "cpf" = ?
+             AND "serial" = ?
+        `,
+        [ts, req.body.cpf, req.body.serial],
+        (err) => {
+          if (err) {
+            res.status(500).send("Erro ao encerrar aluguel.");
+          }
+        }
+      );
+      axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/pagamento/" + req.body.cpf,
+        data: { valor: valor },
+      })
+        .then(() => {
+          res.status(200).send("Aluguel encerrado!");
+        })
+        .catch((err) => {
+          console.log("Error", err);
+          res.status(500).send("Erro ao encerrar patinete");
+        });
     }
   );
 });
