@@ -1,31 +1,179 @@
-import { StyleSheet } from 'react-native';
+import { useEffect, useState } from "react";
+import { StyleSheet, Pressable, ScrollView, Button } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+import axios from "axios";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+
+import { Text, View } from "../../components/Themed";
+import { User } from "../../constants/User";
+import { UserInfo } from "../../components/UserInfo";
+import { CONFIG_ENDPOINT } from "../endpoints";
+
+type UserData = {
+  [key: string]: {
+    name: string;
+    cpf: string;
+    blocked?: boolean;
+  };
+};
 
 export default function TabTwoScreen() {
+  const [fetchError, setFetchError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [hasSelectedUsers, setHasSelectedUsers] = useState(false);
+  let __selectedUsers = [];
+
+  const fetchUsers = () => {
+    setIsLoading(true);
+    setSelectedUsers([]);
+    setHasSelectedUsers(false);
+
+    axios
+      .get(CONFIG_ENDPOINT)
+      .then((resp) => {
+        let users: User[] = [];
+        let userData: UserData = resp.data.info;
+
+        for (const [key, info] of Object.entries(userData)) {
+          let user: User = { name: info.name, cpf: info.cpf, key };
+          if (info.blocked) {
+            user.blocked = true;
+          }
+          users.push(user);
+        }
+
+        setUsers(users);
+        setIsLoading(false);
+      })
+      .catch(() => setFetchError(true));
+  };
+
+  const blockUsers = () => {
+    axios.post(CONFIG_ENDPOINT + "/block", { cpfs: selectedUsers }).then(() => {
+      fetchUsers();
+    });
+  };
+
+  const unblockUsers = () => {
+    axios
+      .post(CONFIG_ENDPOINT + "/unblock", { cpfs: selectedUsers })
+      .then(() => {
+        fetchUsers();
+      });
+  };
+
+  const [reload, _] = useState(false);
+  useEffect(fetchUsers, [reload]);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
-    </View>
+    <ScrollView style={styles.container}>
+      <Pressable
+        style={styles.reload}
+        onPress={() => {
+          fetchUsers();
+          setSelectedUsers([]);
+        }}
+      >
+        {({ pressed }) => (
+          <FontAwesome
+            name="rotate-right"
+            size={25}
+            color="white"
+            style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+          />
+        )}
+      </Pressable>
+      <View style={styles.usersContainer}>
+        <Text style={styles.header}>Usuários:</Text>
+        {fetchError ? (
+          <Text style={styles.warningText}>Erro ao buscar Usuários...</Text>
+        ) : isLoading ? (
+          <Text style={styles.warningText}>Carregando Usuários...</Text>
+        ) : (
+          <View>
+            {users.map((user, i) => {
+              return (
+                <View key={i} style={styles.user}>
+                  <BouncyCheckbox
+                    onPress={(isChecked: boolean) => {
+                      __selectedUsers = selectedUsers;
+                      if (isChecked) {
+                        __selectedUsers.push(user.cpf);
+                      } else {
+                        for (let i = 0; i < __selectedUsers.length; i++) {
+                          if (__selectedUsers[i] === user.cpf) {
+                            __selectedUsers.splice(i, 1);
+                          }
+                        }
+                      }
+
+                      setSelectedUsers(__selectedUsers);
+                      setHasSelectedUsers(!!selectedUsers.length);
+                    }}
+                  ></BouncyCheckbox>
+                  <UserInfo key={i} user={user}></UserInfo>
+                </View>
+              );
+            })}
+          </View>
+        )}
+      </View>
+      <View style={styles.actions}>
+        <Button title={"Adicionar Usuário"}></Button>
+        {hasSelectedUsers ? (
+          <View>
+            <Button
+              title={"Conceder Accesso aos Usuários Selecionados"}
+              onPress={unblockUsers}
+            ></Button>
+            <Button
+              color="red"
+              title={"Bloquear Usuários Selecionados"}
+              onPress={blockUsers}
+            ></Button>
+          </View>
+        ) : (
+          ""
+        )}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  container: {},
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  usersContainer: {
+    width: "100%",
+    marginTop: 20,
+    marginLeft: 20,
+  },
+  user: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  header: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  reload: {
+    position: "absolute",
+    top: 10,
+    right: 0,
+    zIndex: 100,
+  },
+  warningText: {
+    fontSize: 20,
+  },
+  actions: {
+    marginBottom: 40,
   },
 });

@@ -105,10 +105,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   scrollView: {
+    marginTop: 15,
     width: "100%",
   },
   entry: {
     marginTop: 30,
+    marginLeft: 10,
   },
   reload: {
     position: "absolute",
