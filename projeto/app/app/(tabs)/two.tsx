@@ -23,6 +23,8 @@ export default function LogScreen() {
 
   const fetchLogData = () => {
     setLogsFetched(false);
+    setFetchError(false);
+
     axios
       .get(LOG_ENDPOINT)
       .then((logResp) => {
@@ -50,7 +52,7 @@ export default function LogScreen() {
                 cpf,
               });
             }
-            setLogs(logsData);
+            setLogs(logsData.reverse());
             setLogsFetched(true);
           })
           .catch(() => {
@@ -90,6 +92,7 @@ export default function LogScreen() {
               </View>
             );
           })}
+          <View style={{ marginBottom: 50 }}></View>
         </ScrollView>
       ) : (
         <Text style={styles.warningText}>Não há registros de acessos</Text>

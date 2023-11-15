@@ -10,6 +10,8 @@
 #define RST_PIN 5      // D1
 #define LED_FAIL 0     // D3
 #define LED_SUCCESS 15 // D8
+#define CONFIG_ENDPOINT "http://192.168.0.67:8000/cadastro"
+#define LOG_ENDPOINT "http://192.168.0.67:8000/log"
 
 WiFiClient client; // Cliente wifi
 
@@ -29,7 +31,7 @@ void setup()
     digitalWrite(LED_FAIL, LOW);
     digitalWrite(LED_SUCCESS, LOW);
 
-    WiFi.begin("", "");
+    WiFi.begin("AP406", "31234578");
     while (WiFi.status() != WL_CONNECTED)
     {
         delay(500);
@@ -46,7 +48,7 @@ void getConfig()
     if (WiFi.status() == WL_CONNECTED)
     {
         HTTPClient http;
-        http.begin(client, "http://...:8080/config");
+        http.begin(client, CONFIG_ENDPOINT);
         int httpCode = http.GET();
 
         if (httpCode == 200)
@@ -76,7 +78,8 @@ void postLog(String data)
     if (WiFi.status() == WL_CONNECTED)
     {
         HTTPClient http;
-        http.begin(client, "http://...:8080/log");
+        http.begin(client, LOG_ENDPOINT);
+        http.addHeader("Content-Type", "application/json");
         int httpCode = http.POST(data);
         http.end();
     }
@@ -92,7 +95,7 @@ void loop()
     digitalWrite(LED_SUCCESS, LOW);
 
     time_t ts = time(NULL);
-    if (lastConfigFetch == 0 || ts - lastConfigFetch > 30)
+    if (lastConfigFetch == 0 || ts - lastConfigFetch > 5)
     {
         lastConfigFetch = ts;
         getConfig();
@@ -129,7 +132,7 @@ void loop()
 
         String name = obj["info"][rfid_data]["name"];
         Serial.println("\nUsuário: " + name);
-        String cpf = obj["info"][rfid_data]["CPF"];
+        String cpf = obj["info"][rfid_data]["cpf"];
         Serial.println("CPF: " + cpf);
 
         if (allowed)
@@ -144,7 +147,7 @@ void loop()
 
         String allowed_key = allowed ? "1" : "0";
         // {"key": rfid_data, "success": allowed}
-        postLog("{\"key\":\"" + rfid_data + "\",\"success\":" + allowed_key + "}");
+        postLog("{\"key\": \"" + rfid_data + "\", \"success\": " + allowed_key + "}");
 
         if (allowed)
         {

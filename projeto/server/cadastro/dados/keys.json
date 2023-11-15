@@ -1,24 +1,4 @@
 {
-  "keys": [
-    "0433298A946880",
-    "ADFJ310112431"
-  ],
-  "info": {
-    "0433298A946880": {
-      "name": "Francisco Camerini",
-      "cpf": 13118204931
-    },
-    "DSK48TU4TLJEGGWEG": {
-      "name": "Jose P. Silva",
-      "cpf": 12345678910
-    },
-    "ADFJ310112431": {
-      "name": "Maria",
-      "cpf": 123412378910
-    },
-    "BDODIFENE738": {
-      "name": "Cleiton",
-      "cpf": 44616789037
-    }
-  }
+  "keys": [],
+  "info": {}
 }

@@ -31,13 +31,12 @@ app.get("/log", (req, res, next) => {
 // Dados esperados:
 // {
 //   "key": <key>,
-//   "ts": <ts>,
 //   "success": 0 || 1
 // }
 app.post("/log", (req, res, next) => {
-  let { key, ts, success } = req.body;
-  if (!(key && ts)) {
-    return res.status(500).send('Required keys: "key", "ts", "success"');
+  let { key, success } = req.body;
+  if (!key) {
+    return res.status(500).send('Required keys: "key", "success"');
   }
 
   if (![0, 1].includes(success)) {
@@ -49,7 +48,7 @@ app.post("/log", (req, res, next) => {
       console.log("Err: ", err);
       return res.status(500).send("Internal Server Error");
     } else {
-      log[ts] = { key, success };
+      log[parseInt(Date.now() / 1000, 10)] = { key, success };
       writeLog(log, () => {
         return res.status(200).send();
       });

@@ -99,7 +99,7 @@ export default function TabTwoScreen() {
           <Text style={styles.warningText}>Erro ao buscar Usuários...</Text>
         ) : isLoading ? (
           <Text style={styles.warningText}>Carregando Usuários...</Text>
-        ) : (
+        ) : users.length ? (
           <View>
             {users.map((user, i) => {
               return (
@@ -126,6 +126,12 @@ export default function TabTwoScreen() {
               );
             })}
           </View>
+        ) : (
+          <Text
+            style={[styles.warningText, { marginVertical: 50, marginLeft: 40 }]}
+          >
+            Não há usuários cadastrados
+          </Text>
         )}
       </View>
       <View style={styles.actions}>
