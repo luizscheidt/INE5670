@@ -23,15 +23,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Acessos",
-          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+          title: "Cadastros",
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
-          title: "Cadastros",
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          title: "Acessos",
+          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
     </Tabs>

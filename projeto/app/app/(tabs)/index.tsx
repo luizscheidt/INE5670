@@ -1,73 +1,82 @@
-import { useState, useEffect } from "react";
-import { StyleSheet, ScrollView, Pressable } from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet, Pressable, ScrollView, Button } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+
 import axios from "axios";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-import { View, Text } from "../../components/Themed";
-import { CONFIG_ENDPOINT, LOG_ENDPOINT } from "../endpoints";
-import { LogEntry } from "../../components/LogEntry";
-import { Log } from "../../constants/Log";
+import { Text, View } from "../../components/Themed";
+import { User } from "../../constants/User";
+import { UserInfo } from "../../components/UserInfo";
+import { CONFIG_ENDPOINT } from "../endpoints";
 
-type LogData = {
-  [ts: string]: {
-    key: string;
-    success: boolean;
+type UserData = {
+  [key: string]: {
+    name: string;
+    cpf: string;
+    blocked?: boolean;
   };
 };
 
-export default function LogScreen() {
-  const [logs, setLogs] = useState<Log[]>([]);
-
-  const [logsFetched, setLogsFetched] = useState(false);
+export default function TabTwoScreen() {
   const [fetchError, setFetchError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [hasSelectedUsers, setHasSelectedUsers] = useState(false);
+  let __selectedUsers = [];
 
-  const fetchLogData = () => {
-    setLogsFetched(false);
+  const fetchUsers = () => {
+    setIsLoading(true);
+    setSelectedUsers([]);
+    setHasSelectedUsers(false);
+
     axios
-      .get(LOG_ENDPOINT)
-      .then((logResp) => {
-        axios
-          .get(CONFIG_ENDPOINT)
-          .then((configResp) => {
-            let logsData: Log[] = [];
-            let logData: LogData = logResp.data;
+      .get(CONFIG_ENDPOINT)
+      .then((resp) => {
+        let users: User[] = [];
+        let userData: UserData = resp.data.info;
 
-            for (const [ts, data] of Object.entries(logData)) {
-              let { key, success } = data;
-              let user = "Desconhecido";
-              let cpf = "-";
+        for (const [key, info] of Object.entries(userData)) {
+          let user: User = { name: info.name, cpf: info.cpf, key };
+          if (info.blocked) {
+            user.blocked = true;
+          }
+          users.push(user);
+        }
 
-              let userData = configResp.data.info[key];
-              if (userData) {
-                user = userData.name;
-                cpf = userData.cpf.toString() || "-";
-              }
-              logsData.push({
-                ts: parseInt(ts, 10),
-                key,
-                success,
-                user,
-                cpf,
-              });
-            }
-            setLogs(logsData);
-            setLogsFetched(true);
-          })
-          .catch(() => {
-            setFetchError(true);
-          });
+        setUsers(users);
+        setIsLoading(false);
       })
-      .catch(() => {
-        setFetchError(true);
+      .catch(() => setFetchError(true));
+  };
+
+  const blockUsers = () => {
+    axios.post(CONFIG_ENDPOINT + "/block", { cpfs: selectedUsers }).then(() => {
+      fetchUsers();
+    });
+  };
+
+  const unblockUsers = () => {
+    axios
+      .post(CONFIG_ENDPOINT + "/unblock", { cpfs: selectedUsers })
+      .then(() => {
+        fetchUsers();
       });
   };
 
-  const [reload, _] = useState(true);
-  useEffect(fetchLogData, [reload]);
+  const [reload, _] = useState(false);
+  useEffect(fetchUsers, [reload]);
 
   return (
-    <View style={styles.container}>
-      <Pressable style={styles.reload} onPress={fetchLogData}>
+    <ScrollView style={styles.container}>
+      <Pressable
+        style={styles.reload}
+        onPress={() => {
+          fetchUsers();
+          setSelectedUsers([]);
+        }}
+      >
         {({ pressed }) => (
           <FontAwesome
             name="rotate-right"
@@ -77,40 +86,83 @@ export default function LogScreen() {
           />
         )}
       </Pressable>
-      {fetchError ? (
-        <Text style={styles.warningText}>Erro ao buscar acessos</Text>
-      ) : !logsFetched ? (
-        <Text style={styles.warningText}>Carregando acessos...</Text>
-      ) : logs.length ? (
-        <ScrollView style={styles.scrollView}>
-          {logs.map((log, i) => {
-            return (
-              <View key={i} style={styles.entry}>
-                <LogEntry key={i} log={log}></LogEntry>
-              </View>
-            );
-          })}
-        </ScrollView>
-      ) : (
-        <Text style={styles.warningText}>Não há registros de acessos</Text>
-      )}
-    </View>
+      <View style={styles.usersContainer}>
+        <Text style={styles.header}>Usuários:</Text>
+        {fetchError ? (
+          <Text style={styles.warningText}>Erro ao buscar Usuários...</Text>
+        ) : isLoading ? (
+          <Text style={styles.warningText}>Carregando Usuários...</Text>
+        ) : (
+          <View>
+            {users.map((user, i) => {
+              return (
+                <View key={i} style={styles.user}>
+                  <BouncyCheckbox
+                    onPress={(isChecked: boolean) => {
+                      __selectedUsers = selectedUsers;
+                      if (isChecked) {
+                        __selectedUsers.push(user.cpf);
+                      } else {
+                        for (let i = 0; i < __selectedUsers.length; i++) {
+                          if (__selectedUsers[i] === user.cpf) {
+                            __selectedUsers.splice(i, 1);
+                          }
+                        }
+                      }
+
+                      setSelectedUsers(__selectedUsers);
+                      setHasSelectedUsers(!!selectedUsers.length);
+                    }}
+                  ></BouncyCheckbox>
+                  <UserInfo key={i} user={user}></UserInfo>
+                </View>
+              );
+            })}
+          </View>
+        )}
+      </View>
+      <View style={styles.actions}>
+        <Button title={"Adicionar Usuário"}></Button>
+        {hasSelectedUsers ? (
+          <View>
+            <Button
+              title={"Conceder Accesso aos Usuários Selecionados"}
+              onPress={unblockUsers}
+            ></Button>
+            <Button
+              color="red"
+              title={"Bloquear Usuários Selecionados"}
+              onPress={blockUsers}
+            ></Button>
+          </View>
+        ) : (
+          ""
+        )}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+  container: {},
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
-  scrollView: {
-    marginTop: 15,
+  usersContainer: {
     width: "100%",
+    marginTop: 20,
+    marginLeft: 20,
   },
-  entry: {
-    marginTop: 30,
-    marginLeft: 10,
+  user: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  header: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
   reload: {
     position: "absolute",
@@ -119,8 +171,9 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   warningText: {
-    fontSize: 25,
-    position: "absolute",
-    top: "30%",
+    fontSize: 20,
+  },
+  actions: {
+    marginBottom: 40,
   },
 });
