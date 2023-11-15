@@ -56,11 +56,23 @@ app.post("/cadastro", async (req, res, next) => {
       console.log("Error: ", err);
       return res.status(500).send("Internal Server Error");
     } else {
+      for (const [_, info] of Object.entries(json.info)) {
+        if (info.cpf === cpf) {
+          return res
+            .status(400)
+            .send("Já existe um usuário cadastrado com este CPF");
+        }
+      }
+
+      if (Object.keys(json.info).includes(key)) {
+        return res.status(400).send("Esta chave de acesso já foi cadastrada");
+      }
+
       if (!json.keys.includes(key)) {
         json.keys.push(key);
       }
 
-      json.info[cpf] = {
+      json.info[key] = {
         name,
         cpf,
       };
@@ -132,6 +144,35 @@ app.post("/cadastro/unblock", async (req, res, next) => {
           data.keys.push(keysToUnblock[i]);
         }
       }
+      writeKeys(data, () => {});
+    }
+  });
+
+  return res.status(200).send();
+});
+
+// Deleta usuários
+app.delete("/cadastro/:cpfs", async (req, res, next) => {
+  let cpfs = req.params.cpfs.split(",");
+
+  readKeys((err, data) => {
+    if (err) {
+      console.log("Err", err);
+      return res.status(500).send();
+    } else {
+      cpfs.forEach((cpf) => {
+        cpf = parseInt(cpf);
+        let keyToRemove = "";
+
+        for (const [key, info] of Object.entries(data.info)) {
+          if (info.cpf === cpf) {
+            keyToRemove = key;
+          }
+        }
+
+        delete data.info[keyToRemove];
+        data.keys.splice(data.keys.indexOf(keyToRemove), 1);
+      });
       writeKeys(data, () => {});
     }
   });

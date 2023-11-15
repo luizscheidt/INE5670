@@ -73,7 +73,7 @@ export default function LogScreen() {
             name="rotate-right"
             size={25}
             color="white"
-            style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            style={{ marginRight: 10, opacity: pressed ? 0.5 : 1 }}
           />
         )}
       </Pressable>

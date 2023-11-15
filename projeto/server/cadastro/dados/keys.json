@@ -1,9 +1,7 @@
 {
   "keys": [
     "0433298A946880",
-    "DSK48TU4TLJEGGWEG",
-    "ADFJ310112431",
-    "FJ31DASF0112431"
+    "ADFJ310112431"
   ],
   "info": {
     "0433298A946880": {
@@ -18,9 +16,9 @@
       "name": "Maria",
       "cpf": 123412378910
     },
-    "FJ31DASF0112431": {
-      "name": "Fulano Lamar",
-      "cpf": 13419875135
+    "BDODIFENE738": {
+      "name": "Cleiton",
+      "cpf": 44616789037
     }
   }
 }

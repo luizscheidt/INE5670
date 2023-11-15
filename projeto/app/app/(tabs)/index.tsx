@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Pressable, ScrollView, Button } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 import axios from "axios";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -65,6 +66,12 @@ export default function TabTwoScreen() {
       });
   };
 
+  const deleteUsers = () => {
+    axios.delete(CONFIG_ENDPOINT + "/" + selectedUsers.join(",")).then(() => {
+      fetchUsers();
+    });
+  };
+
   const [reload, _] = useState(false);
   useEffect(fetchUsers, [reload]);
 
@@ -82,7 +89,7 @@ export default function TabTwoScreen() {
             name="rotate-right"
             size={25}
             color="white"
-            style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            style={{ marginRight: 10, opacity: pressed ? 0.5 : 1 }}
           />
         )}
       </Pressable>
@@ -122,7 +129,12 @@ export default function TabTwoScreen() {
         )}
       </View>
       <View style={styles.actions}>
-        <Button title={"Adicionar Usuário"}></Button>
+        <Button
+          title={"Adicionar Usuário"}
+          onPress={() => {
+            router.replace("/register");
+          }}
+        ></Button>
         {hasSelectedUsers ? (
           <View>
             <Button
@@ -133,6 +145,11 @@ export default function TabTwoScreen() {
               color="red"
               title={"Bloquear Usuários Selecionados"}
               onPress={blockUsers}
+            ></Button>
+            <Button
+              color="red"
+              title={"Deletar Usuários Selecionados"}
+              onPress={deleteUsers}
             ></Button>
           </View>
         ) : (
